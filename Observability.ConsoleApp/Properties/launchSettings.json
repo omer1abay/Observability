@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Observability.ConsoleApp": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
