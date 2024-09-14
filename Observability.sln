@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order.API", "Order.API\Orde
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenTelemetry.Shared", "OpenTelemetry.Shared\OpenTelemetry.Shared.csproj", "{73EA5EC6-61B1-442B-8A33-96237640DF2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock.API", "Stock.API\Stock.API.csproj", "{BA118F5F-5250-40C2-AB27-2582677974BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Stock.API", "Stock.API\Stock.API.csproj", "{BA118F5F-5250-40C2-AB27-2582677974BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Payment.API", "Payment.API\Payment.API.csproj", "{5708BFC3-BD24-44B2-9547-DE2112D056D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Payment.API", "Payment.API\Payment.API.csproj", "{5708BFC3-BD24-44B2-9547-DE2112D056D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging.Shared", "Logging.Shared\Logging.Shared.csproj", "{511EB72B-3A7E-407D-8FEB-AD72707987D5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{5708BFC3-BD24-44B2-9547-DE2112D056D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5708BFC3-BD24-44B2-9547-DE2112D056D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5708BFC3-BD24-44B2-9547-DE2112D056D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{511EB72B-3A7E-407D-8FEB-AD72707987D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{511EB72B-3A7E-407D-8FEB-AD72707987D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{511EB72B-3A7E-407D-8FEB-AD72707987D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{511EB72B-3A7E-407D-8FEB-AD72707987D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

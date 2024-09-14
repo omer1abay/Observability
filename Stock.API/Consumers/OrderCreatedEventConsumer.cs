@@ -22,7 +22,6 @@ namespace Stock.API.Consumers
 
 
             return Task.CompletedTask;
-
         }
     }
 }

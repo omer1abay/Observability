@@ -12,6 +12,7 @@ namespace Order.API.Controllers
     {
         private readonly OrderService _orderService;
         private readonly IPublishEndpoint _publishEndpoint; //Ipublish endpoint direkt exhange'e gönderir kuyruğa göndermez
+        
 
         public OrderController(OrderService orderService, IPublishEndpoint publishEndpoint)
         {

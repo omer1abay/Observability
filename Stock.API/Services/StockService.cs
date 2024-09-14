@@ -8,10 +8,12 @@ namespace Stock.API.Services
     public class StockService
     {
         private readonly PaymentService _paymentService;
+        private readonly ILogger<StockService> _logger;
 
-        public StockService(PaymentService paymentService)
+        public StockService(PaymentService paymentService, ILogger<StockService> logger)
         {
             _paymentService = paymentService;
+            _logger = logger;
         }
 
         private Dictionary<int, int> GetProductStockList()
@@ -51,6 +53,10 @@ namespace Stock.API.Services
 
                 return CustomResponseDto<StockCheckAndPaymentProcesResponse>.Fail(HttpStatusCode.BadRequest.GetHashCode(), "stok yok");
             }
+
+            throw new DivideByZeroException("Bölünme hatası meydana geldi");
+
+            _logger.LogInformation("Stock ayrıldı. {@orderCode}", request.OrderCode); //{@orderCode} özel bir syntax'tır ilgili db'ye direkt kolon olarak ekler indexler belirttiğimiz yapıyı ve görüntülememizi sağlar
 
             //stokta var, payment süre. başlar
             var (isSuccess, failMessage) = await _paymentService.CreatePaymentProcess(new PaymentCreateRequestDto() { OrderCode = request.OrderCode, TotalPrice = request.OrderItems.Sum(x => x.Price) });

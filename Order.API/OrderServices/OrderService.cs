@@ -16,13 +16,15 @@ namespace Order.API.OrderServices
         private readonly StockService _stockService;
         private readonly RedisService _redisService;
         private readonly IPublishEndpoint _publishEndpoint;
+        private readonly ILogger<OrderService> _logger;
 
-        public OrderService(AppDbContext context, StockService stockService, RedisService redisService, IPublishEndpoint publishEndpoint)
+        public OrderService(AppDbContext context, StockService stockService, RedisService redisService, IPublishEndpoint publishEndpoint, ILogger<OrderService> logger)
         {
             _context = context;
             _stockService = stockService;
             _redisService = redisService;
             _publishEndpoint = publishEndpoint;
+            _logger = logger;
         }
 
         public async Task<CustomResponseDto<OrderCreateResponseDto>> CreateAsync(OrderCreateRequestDto requestDto)
@@ -71,7 +73,7 @@ namespace Order.API.OrderServices
 
             await _context.AddAsync(newOrder);
             await _context.SaveChangesAsync();
-
+            _logger.LogInformation("Sipariş db'ye kaydedildi. {@userId}", requestDto.UserId);
             
 
             StockCheckAndPaymentProcesRequest stockCheck = new();

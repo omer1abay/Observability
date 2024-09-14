@@ -30,7 +30,8 @@ namespace OpenTelemetry.Shared
                 options.AddAspNetCoreInstrumentation(opt =>
                 {
                     opt.Filter = (context) => context.Request.Path.Value.Contains("api", StringComparison.InvariantCulture); //sadece endpoint'leri trace etmesi için filter ekledik bu filter ile her endpoint'imiz url'i api içermeli yoksa api içermeyeni de trace etmez. (api/[controller]) 
-                    opt.RecordException = true; //hatanın tüm detayları ile kayıt edilmesi içindir. yoksa çok küçük bir açıklama yazar. Eğer loglarda tutuyorsak true set etmeye gerek yoktur ekstra maliyetten kurtulmak adına
+                    //opt.RecordException = true; //hatanın tüm detayları ile kayıt edilmesi içindir. yoksa çok küçük bir açıklama yazar. Eğer loglarda tutuyorsak true set etmeye gerek yoktur ekstra maliyetten kurtulmak adına
+                    //Serilog üzerinden ES'ye kayıt edilececktir hatalar
                 });
 
                 options.AddEntityFrameworkCoreInstrumentation(opt =>
@@ -45,6 +46,14 @@ namespace OpenTelemetry.Shared
 
                 options.AddHttpClientInstrumentation(opt =>
                 {
+
+                    opt.FilterHttpRequestMessage = (req) =>
+                    {
+                        //http://localhost:9200/_bulk
+                        
+                        return !req.RequestUri!.AbsoluteUri.Contains("9200", StringComparison.InvariantCulture); //ES isteğini trace etmesini engelliyoruz
+                    };
+
                     opt.EnrichWithHttpRequestMessage = async (activity, request) =>
                     {
                         //request'i alacağız

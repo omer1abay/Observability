@@ -9,9 +9,11 @@ using Order.API.StockServices;
 using Order.API.RedisServices;
 using StackExchange.Redis;
 using MassTransit;
+using Serilog;
+using Logging.Shared;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseSerilog(Logging.Shared.Logging.ConfigureLogging);
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -66,7 +68,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<OpenTelemetryTraceIdMiddleware>();
 app.UseMiddleware<RequestAndResponseActivityMiddleware>();
+app.UseExceptionMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();

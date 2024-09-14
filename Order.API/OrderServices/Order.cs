@@ -1,4 +1,5 @@
-﻿using System.Security.Principal;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 
 namespace Order.API.OrderServices
 {
@@ -23,6 +24,7 @@ namespace Order.API.OrderServices
         public int Id { get; set; }
         public int ProductId { get; set; }
         public int Count { get; set; }
+        [Precision(18,2)]
         public decimal Price { get; set; }
         public int OrderId { get; set; }
         public Order Order { get; set; } = null!;

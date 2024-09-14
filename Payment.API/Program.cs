@@ -1,8 +1,10 @@
 using Common.Shared;
+using Logging.Shared;
 using OpenTelemetry.Shared;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseSerilog(Logging.Shared.Logging.ConfigureLogging);
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -21,7 +23,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<OpenTelemetryTraceIdMiddleware>();
 app.UseMiddleware<RequestAndResponseActivityMiddleware>();
+app.UseExceptionMiddleware();
 app.UseAuthorization();
 
 app.MapControllers();

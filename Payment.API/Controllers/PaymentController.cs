@@ -9,6 +9,12 @@ namespace Payment.API.Controllers
     [ApiController]
     public class PaymentController : ControllerBase
     {
+        private readonly ILogger<PaymentController> _logger;
+
+        public PaymentController(ILogger<PaymentController> logger)
+        {
+            _logger = logger;
+        }
 
         [HttpPost]
         public IActionResult Create(PaymentCreateRequestDto requestDto)
@@ -23,8 +29,12 @@ namespace Payment.API.Controllers
 
             if (requestDto.TotalPrice > balance)
             {
+                _logger.LogInformation("yetersiz bakiye. {@orderCode}", requestDto.OrderCode);
+
                 return BadRequest(CustomResponseDto<PaymentCreateResponseDto>.Fail(400,"yetersiz bakiye"));
             }
+
+            _logger.LogInformation("kart işlemi başarıyla gerçekleşmiştir. {@orderCode}", requestDto.OrderCode);
 
             return Ok(CustomResponseDto<PaymentCreateResponseDto>.Success(200,new PaymentCreateResponseDto() { Description = "ödeme başarılı" }));
 
