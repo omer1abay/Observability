@@ -54,7 +54,7 @@ namespace Stock.API.Services
                 return CustomResponseDto<StockCheckAndPaymentProcesResponse>.Fail(HttpStatusCode.BadRequest.GetHashCode(), "stok yok");
             }
 
-            throw new DivideByZeroException("Bölünme hatası meydana geldi");
+            //throw new DivideByZeroException("Bölünme hatası meydana geldi");
 
             _logger.LogInformation("Stock ayrıldı. {@orderCode}", request.OrderCode); //{@orderCode} özel bir syntax'tır ilgili db'ye direkt kolon olarak ekler indexler belirttiğimiz yapıyı ve görüntülememizi sağlar
 

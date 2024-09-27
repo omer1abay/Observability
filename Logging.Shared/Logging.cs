@@ -1,12 +1,30 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using Serilog;
 using Serilog.Exceptions;
 using Serilog.Formatting.Elasticsearch;
+using System.Runtime.CompilerServices;
 
 namespace Logging.Shared
 {
-    public class Logging
+    public static class Logging
     {
+
+        public static void AddOpenTelemetryLog(this WebApplicationBuilder builder)
+        {
+            builder.Logging.AddOpenTelemetry(cfg =>
+            {
+                cfg.SetResourceBuilder(ResourceBuilder.CreateDefault()
+                    .AddService(builder.Configuration.GetSection("OpenTelemetry")["ServiceName"]!, 
+                                builder.Configuration.GetSection("OpenTelemetry")["Version"]));
+
+                cfg.AddOtlpExporter(); //loglarımızı artık new relic'te görebiliyor olacağız.
+            });
+        }
+
         public static Action<HostBuilderContext, LoggerConfiguration> ConfigureLogging => (builderContext,
             loggerConfiguration) =>
             {

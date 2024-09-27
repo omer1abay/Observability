@@ -1,0 +1,33 @@
+receivers: #datayi nereden alacak grpc, http?
+  otlp:
+    protocols:
+      grpc:
+        endpoint: 0.0.0.0:4317
+      http:
+        endpoint: 0.0.0.0:4318
+processors: #toplu gelen datalari isle ve gonder
+  batch:
+exporters: #new relic ile ilgili ayarlari yapacagimiz yer
+  otlp:
+    endpoint: https://otlp.eu01.nr-data.net:4318
+    headers: 
+      api-key: "eu01xx8c53fd40c14ecfc6cd6e54bf427c7eNRAL"
+extensions: #health check islemi
+  health_check:
+  pprof:
+  zpages:
+service: 
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp] #isimler degismemeli
+      processors: [batch]
+      exporters: [otlp] #birden fazla exporter varsa burada belirtmemiz gerekir
+    metrics:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp]
